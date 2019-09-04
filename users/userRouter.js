@@ -10,21 +10,15 @@ server.use(validatePost);
 
 router.post("/", validateUser, (req, res) => {
   const userData = req.body;
-  if (userData) {
-    db.insert(userData)
-      .then(user => {
-        res.status(200).json(user);
-      })
-      .catch(error => {
-        res.sendStatus(500).json({
-          error: "There was an error saving the user to the database"
-        });
+  db.insert(userData)
+    .then(user => {
+      res.status(200).json(user);
+    })
+    .catch(error => {
+      res.status(500).json({
+        error: "There was an error saving the user to the database"
       });
-  } else {
-    res.status(400).json({
-      errorMessage: "Please provide a name"
     });
-  }
 });
 // working
 
@@ -147,6 +141,7 @@ function validateUserId(req, res, next) {
 }
 
 function validateUser(req, res, next) {
+  console.log(req.body);
   if (!req.body) {
     res.status(400).json({
       message: "missing user data"
