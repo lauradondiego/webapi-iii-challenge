@@ -1,27 +1,24 @@
-const express = 'express';
+const router = require("express").Router();
 
-const router = express.Router();
-
-router.get('/', (req, res) => {
-
+router.get("/", (req, res) => {
+  res.send("get to /posts/");
 });
 
-router.get('/:id', (req, res) => {
-
+router.get("/:id", (req, res) => {
+  //   const id = req.body;
+  res.send(`get to /posts/${id}`);
 });
 
-router.delete('/:id', (req, res) => {
-
+router.delete("/:id", (req, res) => {
+  res.remove(`remove /posts/${id}`);
 });
 
-router.put('/:id', (req, res) => {
-
+router.put("/:id", (req, res) => {
+  res.update(`update /posts/${id}`);
 });
 
 // custom middleware
 
-function validatePostId(req, res, next) {
-
-};
+function validatePostId(req, res, next) {}
 
 module.exports = router;
