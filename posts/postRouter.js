@@ -1,4 +1,9 @@
 const router = require("express").Router();
+const express = require("express");
+const server = express();
+const db = require("./postDb");
+server.use(express.json());
+server.use(validatePostId);
 
 router.get("/", (req, res) => {
   res.send("get to /posts/");
@@ -19,6 +24,18 @@ router.put("/:id", (req, res) => {
 
 // custom middleware
 
-function validatePostId(req, res, next) {}
+function validatePostId(req, res, next) {
+  const id = req.body;
+  db.getById(id).then(postid => {
+    if (postid) {
+      req.user = req.body;
+    } else {
+      res.status(400).json({
+        message: "invalid post id"
+      });
+    }
+  });
+  next();
+}
 
 module.exports = router;
