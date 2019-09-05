@@ -142,15 +142,13 @@ function validateUserId(req, res, next) {
 
 function validateUser(req, res, next) {
   console.log(req.body);
-  if (!req.body) {
-    res.status(400).json({
-      message: "missing user data"
-    });
-  } else if (!req.body.name) {
-    res.status(400).json({
-      message: "missing required name field"
-    });
+  if (Object.keys(req.body) < 1) {
+    return res.status(400).json({ message: "missing user data" });
   }
+  if (!req.body.name) {
+    return res.status(400).json({ message: "missing required name field" });
+  }
+  req.user = req.body;
   next();
 }
 
