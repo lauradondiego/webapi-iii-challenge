@@ -143,6 +143,8 @@ function validateUserId(req, res, next) {
 function validateUser(req, res, next) {
   console.log(req.body);
   if (Object.keys(req.body) < 1) {
+    // or you can do (req.body).length which checks for empty array
+    // object.keys is a js method that puts all of the keys only (not values) into an array
     return res.status(400).json({ message: "missing user data" });
   }
   if (!req.body.name) {
@@ -153,7 +155,7 @@ function validateUser(req, res, next) {
 }
 
 function validatePost(req, res, next) {
-  if (!req.body) {
+  if (Object.keys(req.body) < 1) {
     res.status(400).json({ message: "missing post data" });
   } else if (!req.body.text) {
     res.status(400).json({ message: "missing required text field" });
